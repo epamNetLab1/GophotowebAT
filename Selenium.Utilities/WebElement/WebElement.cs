@@ -91,7 +91,7 @@ namespace Selenium.Utilities.WebElement
             }
             catch (Exception e)
             {
-                Tools.Log(e.Message);
+                log.Debug(e.Message);
 
                 return new List<IWebElement>();
             }

@@ -88,6 +88,7 @@ namespace GophotowebAT
                     Directory.CreateDirectory(PathLogImages);
                 }
                 Browser.SaveScreenshot(PathLogImages + screenName + ".png");
+                log.Debug($"  @@@  Screenshot placed: '{PathLogImages}{screenName}.png");
                 Thread.Sleep(5000);
                 return screenName;
             }

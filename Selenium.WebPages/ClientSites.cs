@@ -20,7 +20,7 @@ namespace GophotowebAT.Selenium.WebPages
 
         internal void WaitAddSite()
         {
-            WaitHelper.SpinWait(() => !BlockWaitAnimation.Exists(), TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(15));
+            WaitHelper.SpinWait(() => !BlockWaitAnimation.Exists(), TimeSpan.FromSeconds(120), TimeSpan.FromSeconds(15));
         }
 
         internal Clientsiteedit LinkSiteSettingsClick()
