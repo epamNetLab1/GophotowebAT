@@ -20,13 +20,13 @@ namespace GophotowebAT.NUnitTests
             clientSites = clientarea.LogIn();
         }
 
-        [Test]
+        [Test, Timeout(600000)]
         public void TestSignIn()
         {
             Assert.AreEqual(userName, clientSites.MenuUsername.Text, "clientSites.MenuUsername.Text");
         }
 
-        [Test]
+        [Test, Timeout(600000)]
         public void TestAddDeleteSites()
         {
             var sitesCount = clientSites.LinkSiteSettings.Count;
