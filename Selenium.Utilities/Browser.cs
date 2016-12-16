@@ -8,7 +8,6 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Interactions;
-using Selenium.Utilities.Properties;
 using System.Configuration;
 using OpenQA.Selenium.Support.Events;
 using log4net;
@@ -60,7 +59,7 @@ namespace Selenium.Utilities
 
         public static Browsers SelectedBrowser
         {
-            get { return Settings.Default.Browser; }
+            get { return Browsers.Chrome; }
         }
 
         public static Uri Url

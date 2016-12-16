@@ -79,12 +79,6 @@
     <Compile Include="Selenium.Utilities\DirectoryHelper.cs" />
     <Compile Include="Selenium.Utilities\EnumHelper.cs" />
     <Compile Include="Selenium.Utilities\Extensions.cs" />
-    <Compile Include="Selenium.Utilities\Properties\Settings.Designer.cs" />
-    <Compile Include="Selenium.Utilities\Properties\Settings1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Selenium.Utilities\RandomHelper.cs" />
     <Compile Include="Selenium.Utilities\Tags\TagAttributes.cs" />
     <Compile Include="Selenium.Utilities\Tags\TagNames.cs" />
@@ -94,15 +88,18 @@
     <Compile Include="Selenium.Utilities\WebElement\WebElementByCriteria.cs" />
     <Compile Include="Selenium.Utilities\WebElement\WebElementExceptions.cs" />
     <Compile Include="Selenium.Utilities\WebElement\WebElementFilters.cs" />
-    <Compile Include="Selenium.WebPages\Clientarea.cs" />
-    <Compile Include="Selenium.WebPages\Clientsiteedit.cs" />
-    <Compile Include="Selenium.WebPages\ClientSites.cs" />
-    <Compile Include="Selenium.WebPages\Createclientsite.cs" />
-    <Compile Include="Selenium.WebPages\Homepage.cs" />
+    <Compile Include="Selenium.WebPages\AdminSite\Clientarea.cs" />
+    <Compile Include="Selenium.WebPages\AdminSite\Clientsiteedit.cs" />
+    <Compile Include="Selenium.WebPages\AdminSite\ClientSites.cs" />
+    <Compile Include="Selenium.WebPages\AdminSite\Createclientsite.cs" />
+    <Compile Include="Selenium.WebPages\AdminSite\Homepage.cs" />
+    <Compile Include="Selenium.WebPages\CustomerSite\Cart.cs" />
+    <Compile Include="Selenium.WebPages\CustomerSite\Navigate.cs" />
+    <Compile Include="Selenium.WebPages\CustomerSite\OrderResultPage.cs" />
+    <Compile Include="Selenium.WebPages\CustomerSite\ProductPage.cs" />
+    <Compile Include="Selenium.WebPages\CustomerSite\Shop.cs" />
     <Compile Include="Selenium.WebPages\PageBase.cs" />
     <Compile Include="Selenium.WebPages\Pages.cs" />
-    <Compile Include="Selenium.WebPages\Properties\Settings.Designer.cs" />
-    <Compile Include="Selenium.WebPages\Properties\Settings1.Designer.cs" />
     <Compile Include="Tools.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -110,12 +107,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Selenium.Utilities\app.config" />
-    <None Include="Selenium.Utilities\Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Selenium.WebPages\app.config" />
-    <None Include="Selenium.WebPages\Properties\Settings.settings" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

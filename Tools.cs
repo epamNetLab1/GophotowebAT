@@ -18,18 +18,24 @@ namespace GophotowebAT
         public readonly Random Random = new Random();
         public string Viewstate = string.Empty;
         public string Eventvalidation = string.Empty;
+                
         public readonly List<string> UsersPassedTests = new List<string>();
         protected static readonly ILog log = LogManager.GetLogger(typeof(Tools));
 
-        public string FindRegex(string response, string pattern, int indexGroup = 1)
+        internal static double GetPriceFromText(string text)
+        {
+            return Convert.ToDouble(FindRegex(text.Trim().Replace(" ", ""), @"(\d[\d\s\.]*)"));
+        }
+
+        public static string FindRegex(string text, string pattern, int indexGroup = 1)
         {
             var regex = new Regex(pattern);
-            var result = regex.Match(response);
+            var result = regex.Match(text);
             var itemText = result.Groups[indexGroup].ToString();
             return itemText;
         }
 
-        public List<string> FindListOneGroup(string cart, string pattern)
+        public static List<string> FindListOneGroup(string cart, string pattern)
         {
             var regex = new Regex(pattern);
             var result = regex.Match(cart);

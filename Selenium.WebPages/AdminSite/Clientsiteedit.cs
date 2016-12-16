@@ -4,7 +4,7 @@ using Selenium.WebPages;
 using Selenium.Utilities;
 using System.Threading;
 
-namespace GophotowebAT.Selenium.WebPages
+namespace GophotowebAT.AdminSite.Selenium.WebPages
 {
     public class Clientsiteedit : PageBase
     {

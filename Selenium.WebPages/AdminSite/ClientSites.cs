@@ -2,8 +2,9 @@
 using Selenium.Utilities.WebElement;
 using Selenium.WebPages;
 using Selenium.Utilities;
+using Selenium.Utilities.Tags;
 
-namespace GophotowebAT.Selenium.WebPages
+namespace GophotowebAT.AdminSite.Selenium.WebPages
 {
     public class ClientSites : PageBase
     {
@@ -11,6 +12,12 @@ namespace GophotowebAT.Selenium.WebPages
         public readonly WebElement LinkSiteSettings = new WebElement().ByXPath(@"//a[contains(@class, 'mod--cart-settings')]");
         private readonly WebElement LinkAddSite = new WebElement().ByXPath(@"//a[@href='createclientsite.php']");
         public readonly WebElement BlockWaitAnimation = new WebElement().ByXPath(@"//div[contains(text(), 'Один момент,')]");
+        public readonly WebElement LinkCustomerSite = new WebElement().ByXPath(@"//a[@class='md-cart__title']");
+
+        internal string GetCustomerSiteUrl()
+        {
+            return LinkCustomerSite.GetAttribute(TagAttributes.Href);
+        }
 
         internal Createclientsite LinkAddSiteClick()
         {

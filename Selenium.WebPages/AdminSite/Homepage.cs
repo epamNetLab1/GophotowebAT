@@ -1,7 +1,7 @@
 ﻿using Selenium.Utilities.WebElement;
 using Selenium.WebPages;
 
-namespace GophotowebAT.Selenium.WebPages
+namespace GophotowebAT.AdminSite.Selenium.WebPages
 {
     public class Homepage : PageBase
     {

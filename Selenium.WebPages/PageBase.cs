@@ -51,6 +51,8 @@ namespace Selenium.WebPages
                 var className = GetType().FullName;
 
                 var path = className
+                    .Replace(".AdminSite", string.Empty)
+                    .Replace(".CustomerSite", string.Empty)
                     .Replace(rootNamespaceName, string.Empty)
                     .Replace(".", "/");
 
