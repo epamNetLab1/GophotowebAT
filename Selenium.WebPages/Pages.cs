@@ -16,5 +16,7 @@ namespace Selenium.WebPages
         public static readonly Cart Cart = new Cart();
         public static readonly OrderResultPage OrderResultPage = new OrderResultPage();
 
+        public static readonly Payment Payment = new Payment();
+
     }
 }

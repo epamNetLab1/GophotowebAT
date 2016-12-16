@@ -13,6 +13,7 @@ namespace GophotowebAT.AdminSite.Selenium.WebPages
         private readonly WebElement LinkAddSite = new WebElement().ByXPath(@"//a[@href='createclientsite.php']");
         public readonly WebElement BlockWaitAnimation = new WebElement().ByXPath(@"//div[contains(text(), 'Один момент,')]");
         public readonly WebElement LinkCustomerSite = new WebElement().ByXPath(@"//a[@class='md-cart__title']");
+        public readonly WebElement LinkEditSite = new WebElement().ByXPath(@"//a[contains(@class, 'mod--cart-del')]");
 
         internal string GetCustomerSiteUrl()
         {
@@ -34,6 +35,11 @@ namespace GophotowebAT.AdminSite.Selenium.WebPages
         {
             LinkSiteSettings.Last().Click();
             return new Clientsiteedit();
+        }
+
+        internal void ClickEditSite()
+        {
+            LinkEditSite.Click();            
         }
     }
 }

@@ -31,13 +31,13 @@ namespace GophotowebAT.NUnitTests
             var productPriceShopPage = Pages.Shop.GetPriceProduct();
             Shop.LinkProduct.Click();
             var productPriceProductPage = Pages.ProductPage.GetPriceProduct();
-            Console.WriteLine($"productPriceShopPage = {productPriceShopPage}; productPriceProductPage = {productPriceProductPage};");
             Assert.AreEqual(productPriceShopPage, productPriceProductPage, "productPriceProductPage");
+
             Pages.ProductPage.ClickButtonAddToCart();
             Navigate.LinkShopCart.Click();
             var productPriceCartPage = Pages.Cart.GetPriceProduct(Cart.LabelPrice);
-            Console.WriteLine($"productPriceShopPage = {productPriceShopPage}; productPriceCartPage = {productPriceCartPage};");
             Assert.AreEqual(productPriceShopPage, productPriceCartPage, "productPriceProductPage");
+
             var date = DateTime.Now.ToString("dd/MM/yyyy_hh:mm:ss");
             Pages.Cart.FillCustomerData(date);
             Cart.ButtonSubmit.Click();
@@ -54,22 +54,40 @@ namespace GophotowebAT.NUnitTests
             var productPriceShopPage = Pages.Shop.GetPriceProduct();
             Shop.LinkProduct.Click();
             var productPriceProductPage = Pages.ProductPage.GetPriceProduct();
-            Console.WriteLine($"productPriceShopPage = {productPriceShopPage}; productPriceProductPage = {productPriceProductPage};");
             Assert.AreEqual(productPriceShopPage, productPriceProductPage, "productPriceProductPage");
+
             Pages.ProductPage.ClickButtonAddToCart();
             Navigate.LinkShopCart.Click();
             var productPriceCartPage = Pages.Cart.GetPriceProduct(Cart.LabelPrice);
             Pages.Cart.ChangeQtyProduct(newQty);
-            Console.WriteLine($"productPriceShopPage={productPriceShopPage}:productPriceCartPage={productPriceCartPage}");
             Assert.AreEqual(productPriceShopPage, productPriceCartPage, "productPriceProductPage");
+
             var productPriceTotalCartPage = Pages.Cart.GetPriceProduct(Cart.LabelTotalPrice);
-            Console.WriteLine($"productPriceShopPage * {newQty} = {productPriceShopPage * newQty}; productPriceTotalCartPage = {productPriceTotalCartPage};");
             Assert.AreEqual(productPriceShopPage * 5, productPriceTotalCartPage, "productPriceTotalCartPage");
             Assert.AreEqual(productPriceShopPage, productPriceCartPage, "productPriceProductPage");
+
             var date = DateTime.Now.ToString("dd/MM/yyyy_hh:mm:ss");
             Pages.Cart.FillCustomerData(date);
             Cart.ButtonSubmit.Click();
             StringAssert.Contains("Спасибо за покупку!", OrderResultPage.LabelMessage.Text, "OrderResultPage.LabelMessage.Text");
+        }
+
+        [Test]
+        public void CustomPaymentTest()
+        {
+            var uniqueDate = DateTime.Now.ToString("dd/MM/yyyy_hh:mm:ss");
+
+            clientSites.ClickEditSite();
+            NavigateAdmin.LinkShop.Click();
+            NavigateAdmin.LinkShopSettings.Click();
+            NavigateAdmin.LinkShopSettingsPayment.Click();
+            var oldPaymentCount = Payment.RowPaymentMethod.Count;
+            Pages.Payment.AddCustomPayment(uniqueDate);
+            NavigateAdmin.LinkShopSettingsPayment.Click();
+            Pages.Payment.SetPaymentVisible(uniqueDate);
+            Assert.AreEqual(oldPaymentCount + 1, Payment.RowPaymentMethod.Count, "Payment.RowPaymentMethod.Count");
+            Pages.Payment.DeletePayment(uniqueDate);
+            Assert.AreEqual(oldPaymentCount, Payment.RowPaymentMethod.Count, "Payment.RowPaymentMethod.Count");
         }
     }
 }

@@ -21,7 +21,7 @@ namespace GophotowebAT.NUnitTests
             Pages.Homepage.Open();
             var clientarea = Pages.Homepage.LogInClick();
             clientSites = clientarea.LogIn();
-            customerSiteUrl = clientSites.GetCustomerSiteUrl(); 
+            customerSiteUrl = clientSites.GetCustomerSiteUrl();
         }
 
         [Test]
@@ -34,16 +34,18 @@ namespace GophotowebAT.NUnitTests
         public void AddDeleteSitesTest()
         {
             var sitesCount = clientSites.LinkSiteSettings.Count;
-            var createclientsite = clientSites.LinkAddSiteClick();
-            clientSites = createclientsite.CreateSite();
+            clientSites.LinkAddSiteClick()
+                .CreateSite();
             Assert.AreEqual(1, clientSites.BlockWaitAnimation.Count, "clientSites.BlockWaitAnimation.Count");
+
             clientSites.WaitAddSite();
             Assert.AreEqual(sitesCount + 1, clientSites.LinkSiteSettings.Count, "clientSites.LinkSiteSettings.Count");
+
             while (clientSites.LinkSiteSettings.Count > 1)
             {
                 sitesCount = clientSites.LinkSiteSettings.Count;
-                var clientsiteedit = clientSites.LinkSiteSettingsClick();
-                clientSites = clientsiteedit.DeleteSite();
+                clientSites.LinkSiteSettingsClick()
+                    .DeleteSite();
                 Assert.AreEqual(sitesCount - 1, clientSites.LinkSiteSettings.Count, "clientSites.LinkSiteSettings.Count");
             }
         }
