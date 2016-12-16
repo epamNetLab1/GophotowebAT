@@ -98,7 +98,7 @@ namespace Selenium.Utilities.WebElement
 
             var resultList = resultEnumerable.ToList();
 
-            //log.Debug($"        FindIWebElements: List<IWebElement>({FirstSelector}).Count = {resultList.Count}");
+            //log.Debug($"        FindIWebElements: List<IWebElement>('{FirstSelector}').Count = {resultList.Count}");
             return resultList;
         }
 

@@ -60,7 +60,7 @@ namespace Selenium.Utilities.WebElement
 
                 WaitHelper.Try(() => FireJQueryEvent(JavaScriptEvents.KeyUp));
                 WaitHelper.Try(() => FireJQueryEvent(JavaScriptEvents.Change));
-                log.Debug($"        Text set '{value}' for element {FirstSelector}");
+                log.Debug($"        ('{FirstSelector}').Text('{value}')");
             }
             get
             {
@@ -95,7 +95,7 @@ namespace Selenium.Utilities.WebElement
 
         public bool Exists()
         {
-            //log.Debug($"        Check Exists() for element {FirstSelector}");
+            //log.Debug($"        ('{FirstSelector}').Exists()");
             return FindIWebElements().Any();
         }
 
@@ -113,7 +113,7 @@ namespace Selenium.Utilities.WebElement
         {
             var element = FindSingle();
             FireJQueryEvent(element, JavaScriptEvents.Click);
-            log.Debug($"        ClickUseJQuery for element {FirstSelector}");
+            log.Debug($"        ('{FirstSelector}').ClickUseJQuery()");
         }
 
         public void Click(bool useJQuery = false)
@@ -145,14 +145,14 @@ namespace Selenium.Utilities.WebElement
                         element.Click();
                     }
                 }
-                log.Debug($"        Click for element {FirstSelector}");
+                log.Debug($"        ('{FirstSelector}').Click()");
             }
         }
 
         public void SendKeys(string keys)
         {
             FindSingle().SendKeys(keys);
-            log.Debug($"        SendKeys '{keys}' for element {FirstSelector}");
+            log.Debug($"        ('{FirstSelector}').SendKeys('{keys}')");
         }
 
         public void SetCheck(bool value, bool useJQuery = true)
@@ -168,7 +168,7 @@ namespace Selenium.Utilities.WebElement
 
                 if (element.Selected == value)
                 {
-                    log.Debug($"        SetCheck '{value}' for element {FirstSelector}");
+                    log.Debug($"        ('{FirstSelector}').SetCheck('{value}')");
                     return;
                 }
             }
@@ -177,24 +177,24 @@ namespace Selenium.Utilities.WebElement
         public void Select(string optionValue)
         {
             SelectCommon(optionValue, SelectTypes.ByValue);
-            log.Debug($"        Select string '{optionValue}' for element {FirstSelector}");
+            log.Debug($"        ('{FirstSelector}').Select(string '{optionValue}')");
         }
 
         public void Select(int optionValue)
         {
             SelectCommon(optionValue.ToString(CultureInfo.InvariantCulture), SelectTypes.ByValue);
-            log.Debug($"        Select int '{optionValue}' for element {FirstSelector}");
+            log.Debug($"        ('{FirstSelector}').Select(int '{optionValue}')");
         }
 
         public void SelectByText(string optionText)
         {
             SelectCommon(optionText, SelectTypes.ByText);
-            log.Debug($"        Select optionText '{optionText}' for element {FirstSelector}");
+            log.Debug($"        ('{FirstSelector}').Select(optionText '{optionText}')");
         }
 
         public string GetAttribute(TagAttributes tagAttribute)
         {
-            log.Debug($"        GetAttribute '{tagAttribute}' for element {FirstSelector}");
+            log.Debug($"        ('{FirstSelector}').GetAttribute('{tagAttribute}')");
             return FindSingle().GetAttribute(EnumHelper.GetEnumDescription(tagAttribute));
         }
 
@@ -206,7 +206,7 @@ namespace Selenium.Utilities.WebElement
         {
             var element = FindSingle();
             Browser.SwitchToFrame(element);
-            log.Debug($"        SwitchContext for element {FirstSelector}");
+            log.Debug($"        Browser.SwitchToFrame('{FirstSelector}')");
         }
 
         public void CacheSearchResult()
@@ -294,7 +294,7 @@ namespace Selenium.Utilities.WebElement
         {
             var eventName = EnumHelper.GetEnumDescription(javaScriptEvent);
             Browser.ExecuteJavaScript(string.Format("$(arguments[0]).{0}();", eventName), element);
-            log.Debug($"        FireJQueryEvent for element {FirstSelector}: $(arguments[0]).{eventName}();");
+            log.Debug($"        FireJQueryEvent('{FirstSelector}') - $(arguments[0]).{eventName}();");
         }
 
         #endregion

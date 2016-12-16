@@ -47,26 +47,5 @@ namespace GophotowebAT.NUnitTests
                 Assert.AreEqual(sitesCount - 1, clientSites.LinkSiteSettings.Count, "clientSites.LinkSiteSettings.Count");
             }
         }
-
-        [Test]
-        public void PlaceOrderTest()
-        {
-            Browser.Navigate(new Uri(customerSiteUrl));
-            Navigate.LinkShop.Click();
-            var productPriceShopPage = Pages.Shop.GetPriceProduct();
-            Shop.LinkProduct.Click();
-            var productPriceProductPage = Pages.ProductPage.GetPriceProduct();
-            Console.WriteLine($"productPriceShopPage={productPriceShopPage}:productPriceProductPage={productPriceProductPage}");
-            Assert.AreEqual(productPriceShopPage, productPriceProductPage, "productPriceProductPage");
-            Pages.ProductPage.ClickButtonAddToCart();
-            Navigate.LinkShopCart.Click();
-            var productPriceCartPage = Pages.Cart.GetPriceProduct();
-            Console.WriteLine($"productPriceShopPage={productPriceShopPage}:productPriceCartPage={productPriceCartPage}");
-            Assert.AreEqual(productPriceShopPage, productPriceCartPage, "productPriceProductPage");
-            var date = DateTime.Now.ToString("dd/MM/yyyy_hh:mm:ss");
-            Pages.Cart.FillCustomerData(date);
-            Cart.ButtonSubmit.Click();
-            StringAssert.Contains("Спасибо за покупку!", OrderResultPage.LabelMessage.Text, "OrderResultPage.LabelMessage.Text");
-        }
     }
 }
