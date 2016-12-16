@@ -1,4 +1,5 @@
-﻿using Selenium.Utilities.WebElement;
+﻿using Selenium.Utilities;
+using Selenium.Utilities.WebElement;
 using Selenium.WebPages;
 using System;
 
@@ -17,6 +18,9 @@ namespace GophotowebAT.CustomerSite.Selenium.WebPages
         public static readonly WebElement InputComment = new WebElement().ByXPath(@"//div[div[label[contains(text(), 'комментарий')]]]/textarea");
         public static readonly WebElement ButtonSubmit = new WebElement().ByXPath(@"//button[@name='data[btn-submit]']");
         public static readonly WebElement LabelPrice = new WebElement().ByXPath(@"//td[contains(@class, 'totalProductPrice')]");
+        public static readonly WebElement InputQty = new WebElement().ByXPath(@"//td[contains(@class, 'skuCountCell')]/input");
+        public static readonly WebElement LabelTotalPrice = new WebElement().ByXPath(@"//td[contains(@class, 'totalProduct')]/span");
+        public static readonly WebElement LabelTotalPriceWithDelivery = new WebElement().ByXPath(@"//td/span[@id='totalPriceWithDelivery']");
         
         public void FillCustomerData(string date)
         {
@@ -31,10 +35,18 @@ namespace GophotowebAT.CustomerSite.Selenium.WebPages
             InputComment.Text = $"Comment-{date}";
         }
 
-        internal double GetPriceProduct()
+        internal double GetPriceProduct(WebElement element)
         {
-            var price = Tools.GetPriceFromText(LabelPrice.Text);
+            var price = Tools.GetPriceFromText(element.Text);
             return price;
+        }
+        
+        internal void ChangeQtyProduct(int qty)
+        {
+            var oldTotalPrice = LabelTotalPrice.Text;
+            InputQty.Text = qty.ToString();
+            InputQty.FireJQueryEvent(JavaScriptEvents.Change);
+            WaitHelper.SpinWait(()=> LabelTotalPrice.Text != oldTotalPrice);
         }
     }
 }
