@@ -86,8 +86,33 @@ namespace GophotowebAT.NUnitTests
             NavigateAdmin.LinkShopSettingsPayment.Click();
             Pages.Payment.SetPaymentVisible(uniqueDate);
             Assert.AreEqual(oldPaymentCount + 1, Payment.RowPaymentMethod.Count, "Payment.RowPaymentMethod.Count");
+
+            Browser.Navigate(new Uri(customerSiteUrl));
+            Navigate.LinkShop.Click();
+            var productPriceShopPage = Pages.Shop.GetPriceProduct();
+            Shop.LinkProduct.Click();
+            var productPriceProductPage = Pages.ProductPage.GetPriceProduct();
+            Assert.AreEqual(productPriceShopPage, productPriceProductPage, "productPriceProductPage");
+
+            Pages.ProductPage.ClickButtonAddToCart();
+            Navigate.LinkShopCart.Click();
+            var productPriceCartPage = Pages.Cart.GetPriceProduct(Cart.LabelPrice);
+            Assert.AreEqual(productPriceShopPage, productPriceCartPage, "productPriceProductPage");
+
+            Pages.Cart.SelectPaymentMethod(uniqueDate);
+            Pages.Cart.FillCustomerData(uniqueDate);
+            Cart.ButtonSubmit.Click();
+            StringAssert.Contains("Спасибо за покупку!", OrderResultPage.LabelMessage.Text, "OrderResultPage.LabelMessage.Text");
+
+            Pages.Homepage.Open();
+            var clientarea = Pages.Homepage.LogInClick();
+            clientSites.ClickEditSite();
+            NavigateAdmin.LinkShop.Click();
+            NavigateAdmin.LinkShopSettings.Click();
+            NavigateAdmin.LinkShopSettingsPayment.Click();
+            oldPaymentCount = Payment.RowPaymentMethod.Count;
             Pages.Payment.DeletePayment(uniqueDate);
-            Assert.AreEqual(oldPaymentCount, Payment.RowPaymentMethod.Count, "Payment.RowPaymentMethod.Count");
+            Assert.AreEqual(oldPaymentCount - 1, Payment.RowPaymentMethod.Count, "Payment.RowPaymentMethod.Count");
         }
     }
 }

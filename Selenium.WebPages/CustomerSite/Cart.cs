@@ -48,5 +48,11 @@ namespace GophotowebAT.CustomerSite.Selenium.WebPages
             InputQty.FireJQueryEvent(JavaScriptEvents.Change);
             WaitHelper.SpinWait(()=> LabelTotalPrice.Text != oldTotalPrice);
         }
+
+        internal void SelectPaymentMethod(string date)
+        {
+            var inputPayment = new WebElement().ByXPath($@"//div[label[contains(text(), '{date}')]]/input");
+            inputPayment.Click();
+        }
     }
 }
