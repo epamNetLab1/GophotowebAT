@@ -14,5 +14,17 @@ namespace GophotowebAT.CustomerSite.Selenium.WebPages
             var price = Tools.GetPriceFromText(LabelPrice.Text);
             return price;
         }
+
+        internal double GetPriceProduct(int idProduct)
+        {
+            var price = Tools.GetPriceFromText(new WebElement()
+                .ByXPath($@"//a[contains(@class, 'product') and div[img[contains(@src, '{idProduct}')]]]//div/span[@class='product-price-min']").Text);
+            return price;
+        }
+
+        internal static void LinkProductClick(int idProduct)
+        {
+            new WebElement().ByXPath($@"//a[contains(@class, 'product') and div[img[contains(@src, '{idProduct}')]]]").Click();
+        }
     }
 }

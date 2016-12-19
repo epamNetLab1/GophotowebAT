@@ -15,7 +15,7 @@ namespace GophotowebAT.CustomerSite.Selenium.WebPages
 
         public void ClickButtonAddToCart()
         {
-            if (OptionDefaultSelectOptions.Selected)
+            if (OptionDefaultSelectOptions.Exists() && OptionDefaultSelectOptions.Selected)
             {
                 SelectOptions.Select(OptionSelectOptions.Last().Text);
             }

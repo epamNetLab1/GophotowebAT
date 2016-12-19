@@ -47,6 +47,32 @@ namespace GophotowebAT.NUnitTests
         }
 
         [Test]
+        public void PlaceOrderQtyMoreThenInStockTest()
+        {
+            var idProduct = 3811436;
+            int newQty = 10;
+
+            Browser.Navigate(new Uri(customerSiteUrl));
+            Navigate.LinkShop.Click();
+            var productPriceShopPage = Pages.Shop.GetPriceProduct(idProduct);
+            Shop.LinkProductClick(idProduct);
+            var productPriceProductPage = Pages.ProductPage.GetPriceProduct();
+            Assert.AreEqual(productPriceShopPage, productPriceProductPage, "productPriceProductPage");
+
+            Pages.ProductPage.ClickButtonAddToCart();
+            Navigate.LinkShopCart.Click();
+            var productPriceCartPage = Pages.Cart.GetPriceProduct(Cart.LabelPrice);
+            Pages.Cart.ChangeQtyProduct(newQty);
+            Assert.AreEqual(productPriceShopPage, productPriceCartPage, "productPriceProductPage");
+
+            var date = DateTime.Now.ToString("dd/MM/yyyy_hh:mm:ss");
+            Pages.Cart.FillCustomerData(date);
+            Cart.ButtonSubmitClick();
+            StringAssert.Contains("К сожалению, введенного количества товара нет в наличии.", 
+                Cart.LabelShopSkuQuantityError.Text, "Cart.LabelShopSkuQuantityError.Text");
+        }
+
+        [Test]
         public void ChangeQtyAndPlaceOrderTest()
         {
             int newQty = 5;
