@@ -23,6 +23,7 @@ namespace GophotowebAT.CustomerSite.Selenium.WebPages
         public static readonly WebElement LabelTotalPrice = new WebElement().ByXPath(@"//td[contains(@class, 'totalProduct')]/span");
         public static readonly WebElement LabelTotalPriceWithDelivery = new WebElement().ByXPath(@"//td/span[@id='totalPriceWithDelivery']");
         public static readonly WebElement LabelPaymentDisableMethodError = new WebElement().ByXPath(@"//span[@id='paymentDisableMethodError']");
+        public static readonly WebElement LabelDeliveryDisableMethodError = new WebElement().ByXPath(@"//span[@id='deliveryDisableMethodError']");
         
         public void FillCustomerData(string date)
         {

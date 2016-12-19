@@ -202,5 +202,46 @@ namespace GophotowebAT.NUnitTests
             Pages.Delivery.DeleteDeliveryMethod(uniqueDate);
             Assert.AreEqual(oldDeliveryCount - 1, Delivery.RowDeliveryMethod.Count, "Delivery.RowDeliveryMethod.Count");
         }
+
+        [Test]
+        public void DeleteCustomDeliveryWithCurrentOrderTest()
+        {
+            var uniqueDate = DateTime.Now.ToString("dd/MM/yyyy_hh:mm:ss");
+
+            clientSites.ClickEditSite();
+            NavigateAdmin.LinkShop.Click();
+            NavigateAdmin.LinkShopSettings.Click();
+            NavigateAdmin.LinkShopSettingsDelivery.Click();
+            var oldDeliveryCount = Delivery.RowDeliveryMethod.Count;
+            Pages.Delivery.AddDeliveryMethod(uniqueDate);
+            NavigateAdmin.LinkShopSettingsDelivery.Click();
+            Pages.Delivery.SetDeliveryVisible(uniqueDate);
+            Assert.AreEqual(oldDeliveryCount + 1, Delivery.RowDeliveryMethod.Count, "Delivery.RowDeliveryMethod.Count");
+
+            Browser.OpenNewTab(customerSiteUrl);
+            Browser.WebDriver.SwitchTo().Window(Browser.WebDriver.WindowHandles.Last());
+            Navigate.LinkShop.Click();
+            var productPriceShopPage = Pages.Shop.GetPriceProduct();
+            Shop.LinkProduct.Click();
+            var productPriceProductPage = Pages.ProductPage.GetPriceProduct();
+            Assert.AreEqual(productPriceShopPage, productPriceProductPage, "productPriceProductPage");
+
+            Pages.ProductPage.ClickButtonAddToCart();
+            Navigate.LinkShopCart.Click();
+            var productPriceCartPage = Pages.Cart.GetPriceProduct(Cart.LabelPrice);
+            Assert.AreEqual(productPriceShopPage, productPriceCartPage, "productPriceProductPage");
+
+            Pages.Cart.FillCustomerData(uniqueDate);
+
+            Browser.WebDriver.SwitchTo().Window(Browser.WebDriver.WindowHandles.First());
+            oldDeliveryCount = Delivery.RowDeliveryMethod.Count;
+            Pages.Delivery.DeleteDeliveryMethod(uniqueDate);
+            Assert.AreEqual(oldDeliveryCount - 1, Delivery.RowDeliveryMethod.Count, "Delivery.RowDeliveryMethod.Count");
+
+            Browser.WebDriver.SwitchTo().Window(Browser.WebDriver.WindowHandles.Last());
+            Cart.ButtonSubmitClick();
+            StringAssert.Contains("Выбранный способ доставки в данный момент не доступен",
+                Cart.LabelDeliveryDisableMethodError.Text, "Cart.LabelDeliveryDisableMethodError.Text");
+        }
     }
 }
