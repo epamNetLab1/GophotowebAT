@@ -155,10 +155,52 @@ namespace GophotowebAT.NUnitTests
 
             Browser.WebDriver.SwitchTo().Window(Browser.WebDriver.WindowHandles.Last());
             Cart.ButtonSubmitClick();
-            
+
             Console.WriteLine(Cart.LabelPaymentDisableMethodError.Text);
-            StringAssert.Contains("Выбранный метод оплаты в данный момент не доступен", 
+            StringAssert.Contains("Выбранный метод оплаты в данный момент не доступен",
                 Cart.LabelPaymentDisableMethodError.Text, "Cart.LabelPaymentDisableMethodError.Text");
-        }        
+        }
+
+        [Test]
+        public void CustomDeliveryTest()
+        {
+            var uniqueDate = DateTime.Now.ToString("dd/MM/yyyy_hh:mm:ss");
+
+            clientSites.ClickEditSite();
+            NavigateAdmin.LinkShop.Click();
+            NavigateAdmin.LinkShopSettings.Click();
+            NavigateAdmin.LinkShopSettingsDelivery.Click();
+            var oldDeliveryCount = Delivery.RowDeliveryMethod.Count;
+            Pages.Delivery.AddDeliveryMethod(uniqueDate);
+            NavigateAdmin.LinkShopSettingsDelivery.Click();
+            Pages.Delivery.SetDeliveryVisible(uniqueDate);
+            Assert.AreEqual(oldDeliveryCount + 1, Delivery.RowDeliveryMethod.Count, "Delivery.RowDeliveryMethod.Count");
+
+            Browser.Navigate(new Uri(customerSiteUrl));
+            Navigate.LinkShop.Click();
+            var productPriceShopPage = Pages.Shop.GetPriceProduct();
+            Shop.LinkProduct.Click();
+            var productPriceProductPage = Pages.ProductPage.GetPriceProduct();
+            Assert.AreEqual(productPriceShopPage, productPriceProductPage, "productPriceProductPage");
+
+            Pages.ProductPage.ClickButtonAddToCart();
+            Navigate.LinkShopCart.Click();
+            var productPriceCartPage = Pages.Cart.GetPriceProduct(Cart.LabelPrice);
+            Assert.AreEqual(productPriceShopPage, productPriceCartPage, "productPriceProductPage");
+
+            Pages.Cart.FillCustomerData(uniqueDate);
+            Cart.ButtonSubmit.Click();
+            StringAssert.Contains("Спасибо за покупку!", OrderResultPage.LabelMessage.Text, "OrderResultPage.LabelMessage.Text");
+
+            Pages.Homepage.Open();
+            var clientarea = Pages.Homepage.LogInClick();
+            clientSites.ClickEditSite();
+            NavigateAdmin.LinkShop.Click();
+            NavigateAdmin.LinkShopSettings.Click();
+            NavigateAdmin.LinkShopSettingsDelivery.Click();
+            oldDeliveryCount = Payment.RowDeliveryMethod.Count;
+            Pages.Delivery.DeleteDeliveryMethod(uniqueDate);
+            Assert.AreEqual(oldDeliveryCount - 1, Delivery.RowDeliveryMethod.Count, "Delivery.RowDeliveryMethod.Count");
+        }
     }
 }

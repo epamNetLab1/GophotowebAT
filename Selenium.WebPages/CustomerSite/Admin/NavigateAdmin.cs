@@ -19,6 +19,7 @@ namespace GophotowebAT.CustomerSite.Selenium.WebPages
         public static readonly WebElement LinkShopSettings = new WebElement().ByXPath(@"//li/a[contains(@href, '/admin/shop/settings')]");
 
         public static readonly WebElement LinkShopSettingsPayment = new WebElement().ByXPath(@"//li/a[contains(@href, '/admin/shop/settings/payment')]");
+        public static readonly WebElement LinkShopSettingsDelivery = new WebElement().ByXPath(@"//li/a[contains(@href, '/admin/shop/settings/delivery')]");
         
     }
 }

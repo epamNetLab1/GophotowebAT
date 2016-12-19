@@ -17,6 +17,7 @@ namespace Selenium.WebPages
         public static readonly OrderResultPage OrderResultPage = new OrderResultPage();
 
         public static readonly Payment Payment = new Payment();
+        public static readonly Delivery Delivery = new Delivery();
 
     }
 }

@@ -95,6 +95,7 @@
     <Compile Include="Selenium.WebPages\AdminSite\Createclientsite.cs" />
     <Compile Include="Selenium.WebPages\AdminSite\Homepage.cs" />
     <Compile Include="Selenium.WebPages\CustomerSite\Admin\NavigateAdmin.cs" />
+    <Compile Include="Selenium.WebPages\CustomerSite\Admin\Shop\Settings\Delivery.cs" />
     <Compile Include="Selenium.WebPages\CustomerSite\Admin\Shop\Settings\Payment.cs" />
     <Compile Include="Selenium.WebPages\CustomerSite\Cart.cs" />
     <Compile Include="Selenium.WebPages\CustomerSite\Navigate.cs" />
