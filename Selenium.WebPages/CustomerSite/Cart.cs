@@ -2,6 +2,7 @@
 using Selenium.Utilities.WebElement;
 using Selenium.WebPages;
 using System;
+using System.Threading;
 
 namespace GophotowebAT.CustomerSite.Selenium.WebPages
 {
@@ -21,6 +22,7 @@ namespace GophotowebAT.CustomerSite.Selenium.WebPages
         public static readonly WebElement InputQty = new WebElement().ByXPath(@"//td[contains(@class, 'skuCountCell')]/input");
         public static readonly WebElement LabelTotalPrice = new WebElement().ByXPath(@"//td[contains(@class, 'totalProduct')]/span");
         public static readonly WebElement LabelTotalPriceWithDelivery = new WebElement().ByXPath(@"//td/span[@id='totalPriceWithDelivery']");
+        public static readonly WebElement LabelPaymentDisableMethodError = new WebElement().ByXPath(@"//span[@id='paymentDisableMethodError']");
         
         public void FillCustomerData(string date)
         {
@@ -53,6 +55,12 @@ namespace GophotowebAT.CustomerSite.Selenium.WebPages
         {
             var inputPayment = new WebElement().ByXPath($@"//div[label[contains(text(), '{date}')]]/input");
             inputPayment.Click();
+        }
+
+        internal static void ButtonSubmitClick()
+        {
+            ButtonSubmit.Click();
+            Thread.Sleep(2000);
         }
     }
 }

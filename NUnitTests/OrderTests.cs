@@ -1,9 +1,11 @@
 ﻿using GophotowebAT.AdminSite.Selenium.WebPages;
 using GophotowebAT.CustomerSite.Selenium.WebPages;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using Selenium.Utilities;
 using Selenium.WebPages;
 using System;
+using System.Linq;
 using TestHttpWebRequest.NUnitTests;
 
 namespace GophotowebAT.NUnitTests
@@ -114,5 +116,49 @@ namespace GophotowebAT.NUnitTests
             Pages.Payment.DeletePayment(uniqueDate);
             Assert.AreEqual(oldPaymentCount - 1, Payment.RowPaymentMethod.Count, "Payment.RowPaymentMethod.Count");
         }
+
+        [Test]
+        public void DeleteCustomPaymentWithCurrentOrderTest()
+        {
+            var uniqueDate = DateTime.Now.ToString("dd/MM/yyyy_hh:mm:ss");
+
+            clientSites.ClickEditSite();
+            NavigateAdmin.LinkShop.Click();
+            NavigateAdmin.LinkShopSettings.Click();
+            NavigateAdmin.LinkShopSettingsPayment.Click();
+            var oldPaymentCount = Payment.RowPaymentMethod.Count;
+            Pages.Payment.AddCustomPayment(uniqueDate);
+            NavigateAdmin.LinkShopSettingsPayment.Click();
+            Pages.Payment.SetPaymentVisible(uniqueDate);
+            Assert.AreEqual(oldPaymentCount + 1, Payment.RowPaymentMethod.Count, "Payment.RowPaymentMethod.Count");
+
+            Browser.OpenNewTab(customerSiteUrl);
+            Browser.WebDriver.SwitchTo().Window(Browser.WebDriver.WindowHandles.Last());
+            Navigate.LinkShop.Click();
+            var productPriceShopPage = Pages.Shop.GetPriceProduct();
+            Shop.LinkProduct.Click();
+            var productPriceProductPage = Pages.ProductPage.GetPriceProduct();
+            Assert.AreEqual(productPriceShopPage, productPriceProductPage, "productPriceProductPage");
+
+            Pages.ProductPage.ClickButtonAddToCart();
+            Navigate.LinkShopCart.Click();
+            var productPriceCartPage = Pages.Cart.GetPriceProduct(Cart.LabelPrice);
+            Assert.AreEqual(productPriceShopPage, productPriceCartPage, "productPriceProductPage");
+
+            Pages.Cart.SelectPaymentMethod(uniqueDate);
+            Pages.Cart.FillCustomerData(uniqueDate);
+
+            Browser.WebDriver.SwitchTo().Window(Browser.WebDriver.WindowHandles.First());
+            oldPaymentCount = Payment.RowPaymentMethod.Count;
+            Pages.Payment.DeletePayment(uniqueDate);
+            Assert.AreEqual(oldPaymentCount - 1, Payment.RowPaymentMethod.Count, "Payment.RowPaymentMethod.Count");
+
+            Browser.WebDriver.SwitchTo().Window(Browser.WebDriver.WindowHandles.Last());
+            Cart.ButtonSubmitClick();
+            
+            Console.WriteLine(Cart.LabelPaymentDisableMethodError.Text);
+            StringAssert.Contains("Выбранный метод оплаты в данный момент не доступен", 
+                Cart.LabelPaymentDisableMethodError.Text, "Cart.LabelPaymentDisableMethodError.Text");
+        }        
     }
 }

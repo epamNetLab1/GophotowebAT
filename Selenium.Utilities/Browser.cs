@@ -133,6 +133,11 @@ namespace Selenium.Utilities
             WebDriver.SwitchTo().Frame(inlineFrame);
         }
 
+        public static void OpenNewTab(string url)
+        {
+            ((IJavaScriptExecutor)WebDriver).ExecuteScript(string.Format("window.open('{0}', '_blank');", url));
+        }
+
         public static void SwitchToPopupWindow()
         {
             foreach (var handle in WebDriver.WindowHandles.Where(handle => handle != _mainWindowHandler)) // TODO:
