@@ -198,7 +198,7 @@ namespace GophotowebAT.NUnitTests
             NavigateAdmin.LinkShop.Click();
             NavigateAdmin.LinkShopSettings.Click();
             NavigateAdmin.LinkShopSettingsDelivery.Click();
-            oldDeliveryCount = Payment.RowDeliveryMethod.Count;
+            oldDeliveryCount = Delivery.RowDeliveryMethod.Count;
             Pages.Delivery.DeleteDeliveryMethod(uniqueDate);
             Assert.AreEqual(oldDeliveryCount - 1, Delivery.RowDeliveryMethod.Count, "Delivery.RowDeliveryMethod.Count");
         }
